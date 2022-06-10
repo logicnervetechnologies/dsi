@@ -1,8 +1,10 @@
-const { v4 : uuidv4 } = require('uuid')
 const { dsiCol } = require("../resources.js")
-
+const { createDoc } = require('./create.js')
 const TYPE = 'testType'
 
+
+console.log("create doc type")
+console.log(typeof(createDoc))
 const handle = (req, res) => {
     // console.log(req.user)
     // console.log(req.body)
@@ -25,16 +27,13 @@ const handle = (req, res) => {
 }
 
 const create = async (req, res) => {
-    const ndsid = uuidv4()
     console.log("creating new ingest")
     newEntry = {
-        dsid: ndsid,
         type: TYPE,
-        uid: req.user.uid,
         array: []
     }
-    console.log(newEntry)
-    await dsiCol.insertOne(newEntry)
+    console.log(typeof(createDoc))
+    const ndsid = await createDoc(req.user.uid, TYPE, newEntry)
     res.json({
         dsid: ndsid
     })
