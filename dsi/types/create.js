@@ -4,6 +4,7 @@ const { v4 : uuidv4 } = require('uuid')
 const createDoc = async (uid, type, dataEntry, manInput=false) => {
     const ndsid = uuidv4()
     console.log("creating new ingest")
+    console.log("MADEIT HERE")
     newEntry = {
         dsid: ndsid,
         uid,

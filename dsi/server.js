@@ -17,8 +17,11 @@ app.use(express.json())
 
 // user info routes
 app.post('/ingest', pretendToken, injest.ingest)
-app.post('/create', pretendToken, injest.create)
-app.post('/read', pretendToken, read)
+// app.post('/create', pretendToken, injest.create)
+app.post('/createSchema', pretendToken, injest.createSch)
+app.post('/createDE', pretendToken, injest.createDE)
+app.post('/retrieveDE', pretendToken, injest.retreiveDE)
+// app.post('/read', pretendToken, read)
 
 
 function pretendToken(req, res, next) {
@@ -60,7 +63,8 @@ function convertCookieString(cookieStr) {
 }
 
 // start server
-const PORT = process.env.HTTPPORT 
+// const PORT = process.env.HTTPPORT 
+const PORT = 5500
 app.listen(PORT, () => {
     console.log("listenting on port:" + PORT)
 })

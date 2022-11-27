@@ -1,18 +1,59 @@
-##########
-
-POST http://localhost:5500/create HTTP/1.1
+#########
+## Test Schema creation
+POST http://localhost/dsi/createSchema HTTP/1.1
 content-type: application/json
 
 {
     "fakeUID": "up9Pgnt2yGWQTmsRO8lpTF2cJlJ2",
-    "type":"testType"
+    "type":"a",
+    "orgId":"82e57c40-2a83-49c2-93dc-b07410c31b66",
+    "parameters":[
+        {
+            "name": "bpm",
+            "type": "number"
+        }
+    ]
 }
 
+#########
+## Test creating dsi entry for user
+POST http://localhost/dsi/createDE HTTP/1.1
+content-type: application/json
+
+{
+    "fakeUID": "up9Pgnt2yGWQTmsRO8lpTF2cJlJ2",
+    "schemaId": "3daa1ceb-2860-4833-9791-cfb12d30b4c1"
+}
+
+#########
+### test pushing data to hentry with dsid
+POST http://localhost/dsi/ingest HTTP/1.1
+content-type: application/json
+
+{
+    "fakeUID": "up9Pgnt2yGWQTmsRO8lpTF2cJlJ2",
+    "dsid": "d058cbe5-8d57-4357-8d2b-677e34732cc5",
+    "hdata": {
+        "time": 20,
+        "bpm": 70
+    }
+}
+
+#########
+### test retreiving hentry data with dsid
+
+POST http://localhost/dsi/ingest HTTP/1.1
+content-type: application/json
+
+{
+    "fakeUID": "up9Pgnt2yGWQTmsRO8lpTF2cJlJ2",
+    "dsid": "d058cbe5-8d57-4357-8d2b-677e34732cc5",
+}
 
 
 #########
 
-POST http://localhost:5500/ingest HTTP/1.1
+POST http://localhost/dsi/ingest HTTP/1.1
 content-type: application/json
 
 {
