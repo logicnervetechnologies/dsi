@@ -42,14 +42,24 @@ content-type: application/json
 #########
 ### test retreiving hentry data with dsid
 
-POST http://localhost/dsi/ingest HTTP/1.1
+POST http://localhost/dsi/retrieveDE HTTP/1.1
 content-type: application/json
 
 {
     "fakeUID": "up9Pgnt2yGWQTmsRO8lpTF2cJlJ2",
-    "dsid": "d058cbe5-8d57-4357-8d2b-677e34732cc5",
+    "dsid": "d058cbe5-8d57-4357-8d2b-677e34732cc5"
 }
 
+#########
+### test retreiving hentry data with dsid
+
+POST http://localhost/dsi/getSchemas HTTP/1.1
+content-type: application/json
+
+{
+    "fakeUID": "up9Pgnt2yGWQTmsRO8lpTF2cJlJ2",
+    "orgId": "82e57c40-2a83-49c2-93dc-b07410c31b66"
+}
 
 #########
 

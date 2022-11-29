@@ -21,6 +21,8 @@ const createSchema = async (uid, orgId, type, parameters, manInput=false) => {
         return null
     }
     // check `uid` part of `orgid`
+    console.log(userFromCol.organizations)
+    console.log(orgId)
     if (!userFromCol.organizations.includes(orgId)) {
         log("user not in specified organization")
         return null
@@ -142,5 +144,26 @@ const extendDsiEntry = async (dsid) => {
 }
 
 
+const getSchemas = async (uid, orgId) => {
+    if (orgId == null){
+        log ("no org specified")
+        return []
+    }
+    // check if user is member of org
+    const org = await orgCol.findOne({orgId})
+    t = false
+    org.members.forEach(member => {
+        if (member.uid == uid) t = true
+    })
+    if (!t) {
+        log("user is not part of org")
+        return []
+    }
+    const schemas = await schemaCol.find({orgId}).toArray()
+    console.log(schemas)
+    return schemas
+}
 
-module.exports = { createSchema, createDsiEntry}
+
+
+module.exports = { createSchema, createDsiEntry, getSchemas}

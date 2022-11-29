@@ -1,5 +1,5 @@
 const { types } = require('./types/types.js')
-const { createSchema, createDsiEntry} = require('./schema/schema.js')
+const { createSchema, createDsiEntry, getSchemas} = require('./schema/schema.js')
 const { insertEntry, insertMultipleEntries, getHEntry } = require('./hdata/hdata.js')
 const { log } = require('./log.js')
 const ingest = async (req, res) => {
@@ -88,4 +88,21 @@ const retreiveDE = async (req, res) => {
     }
 }
 
-module.exports = { create, ingest, createSch, createDE, retreiveDE}
+const retreiveSchemas = async (req, res) => {
+    uid = req.user.uid
+    log(`uid: ${uid} requesting Schemas`)
+    try {
+        const { orgId } = req.body
+        log(`uid: ${uid} requesting Schemas from: ${orgId}`)
+        const schemas = await getSchemas(uid, orgId)
+        if (schemas == null) res.sendStatus(403)
+        else res.send(schemas)
+    }
+    catch (error) {
+        log(`ERROR: ${error}`)
+        res.sendStatus(500)
+    }
+
+}
+
+module.exports = { create, ingest, createSch, retreiveSchemas, createDE, retreiveDE}

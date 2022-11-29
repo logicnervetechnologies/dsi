@@ -7,8 +7,13 @@ console.log("form_server")
 const express = require('express')
 const app = express()
 const jwt = require('jsonwebtoken')
-// const cors = require('cors')
+const cors = require('cors')
 
+
+app.use(cors({
+    origin:"http://localhost:3000",
+    credentials:true
+}))
 // app.use(cors({
 //     origin:"http://localhost:3000",
 //     credentials:true
@@ -18,7 +23,8 @@ app.use(express.json())
 // user info routes
 app.post('/ingest', pretendToken, injest.ingest)
 // app.post('/create', pretendToken, injest.create)
-app.post('/createSchema', pretendToken, injest.createSch)
+app.post('/createSchema', authenticateToken, injest.createSch)
+app.post('/getSchemas', authenticateToken, injest.retreiveSchemas)
 app.post('/createDE', pretendToken, injest.createDE)
 app.post('/retrieveDE', pretendToken, injest.retreiveDE)
 // app.post('/read', pretendToken, read)
